@@ -7,7 +7,7 @@ const swaggerOptions = {
     info: {
       title: "API Documentation",
       version: "1.0.0",
-      description: "This is a sample server",
+      description: "Chat-orbit Server and test your API here",
     },
     components: {
       securitySchemes: {
@@ -18,7 +18,6 @@ const swaggerOptions = {
         },
       },
     },
-    
   },
   apis: ["./routes/*.js"],
 };

@@ -139,7 +139,6 @@ async function getUserProfile(request, response) {
   }
 }
 
-
 async function deleteUser(request, response) {
   try {
     const userId = request.params.userId;
@@ -165,6 +164,23 @@ async function deleteUser(request, response) {
   }
 }
 
+// Fetch all User Details
+async function getAllUsers(request, response) {
+  try {
+    const users = await UserModel.find({}, { password: 0 });
+    response.status(200).json({
+      status: 200,
+      success: true,
+      message: "All users retrieved successfully",
+      users: users,
+    });
+  } catch (error) {
+    response.status(500).json({
+      status: 500,
+      message: "Error retrieving users",
+      error: error.message || error,
+    });
+  }
+}
 
-
-module.exports = { registerUser, loginUser, getUserProfile, deleteUser };
+module.exports = { registerUser, loginUser, getUserProfile, deleteUser, getAllUsers };

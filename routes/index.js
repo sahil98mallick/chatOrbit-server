@@ -4,12 +4,20 @@ const {
   loginUser,
   getUserProfile,
   deleteUser,
+  getAllUsers,
 } = require("../controller/userController");
 const { upload } = require("../helpers/uploadImages");
 const { authenticateToken } = require("../middleware/authMiddleware");
 const router = express.Router();
-// Register
+// Register and Login Routes will be under 'auth'
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: User authentication APIs
+ */
 
+// Register
 /**
  * @swagger
  * /api/users/register:
@@ -46,6 +54,7 @@ const router = express.Router();
  *         description: Registration successful
  *       '400':
  *         description: Invalid input
+ *     tags: [Auth]
  */
 
 // Login
@@ -55,7 +64,7 @@ const router = express.Router();
  *   post:
  *     summary: Logs in a user
  *     description: Authenticates a user by their email and password.
- *     tags: [Users]
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
@@ -82,6 +91,15 @@ const router = express.Router();
  *         description: User not found
  */
 
+// Other routes will be under 'user'
+
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: User management APIs
+ */
+
 // Profile API
 /**
  * @swagger
@@ -103,6 +121,31 @@ const router = express.Router();
  *         type: http
  *         scheme: bearer
  *         bearerFormat: JWT
+ *     tags: [User]
+ */
+
+// All Profiles API
+/**
+ * @swagger
+ * /api/users/allProfile:
+ *   get:
+ *     summary: Get all user profiles
+ *     description: Retrieve details of all user profiles
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: All user profiles retrieved successfully
+ *       '401':
+ *         description: Unauthorized - Token not provided or invalid
+ *       '500':
+ *         description: Error retrieving user profiles
+ *     securitySchemes:
+ *       BearerAuth:
+ *         type: http
+ *         scheme: bearer
+ *         bearerFormat: JWT
+ *     tags: [User]
  */
 
 // ================================== All Routes  ==================================
@@ -110,9 +153,13 @@ const router = express.Router();
 router.post("/register", upload.single("profile_pic"), registerUser);
 // Login Route
 router.post("/login", loginUser);
+
 // Profile get Route
 router.get("/profile", authenticateToken, getUserProfile);
+
 // Profile Delete Route
 router.post("/profile/delete/:userId", authenticateToken, deleteUser);
+
+router.get("/allProfile", authenticateToken, getAllUsers);
 
 module.exports = router;
