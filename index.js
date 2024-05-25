@@ -35,6 +35,10 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // API endpoints
 app.use("/api/users", userRoutes);
 
+app.get('/debug-swagger', (req, res) => {
+  res.json(swaggerSpec);
+});
+
 connectDB()
   .then(() => {
     app.listen(PORT, () => {
