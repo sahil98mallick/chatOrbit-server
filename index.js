@@ -19,7 +19,7 @@ const corsOptions = {
   origin: "*",
   methods: "GET, POST, PUT, DELETE",
 };
-app.use(cors(corsOptions));
+app.use(cors());
 
 const PORT = process.env.PORT || 8081;
 
