@@ -8,12 +8,18 @@ app.use(express.json());
 const { swaggerUi, swaggerSpec } = require("./swagger/swagger");
 
 // Middleware to parse JSON bodies
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: process.env.FRONTEND_URL,
+//     credentials: true,
+//   })
+// );
+
+const corsOptions = {
+  origin: "*",
+  methods: "GET, POST, PUT, DELETE",
+};
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 8081;
 
